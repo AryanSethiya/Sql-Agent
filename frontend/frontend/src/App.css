@@ -1,0 +1,152 @@
+body, #root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+}
+
+.card {
+  background: #23272f;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px #000a;
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 400px;
+  position: relative;
+}
+
+.logo {
+  height: 5em;
+  margin-bottom: 1.2em;
+}
+
+h1 {
+  font-size: 2.3em;
+  margin-bottom: 1.2em;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+  width: 100%;
+  gap: 0.7em;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+  width: 100%;
+  padding: 0.8em 1em;
+  font-size: 1.1em;
+  border-radius: 8px;
+  border: 1.5px solid #444;
+  background: #181a20;
+  color: #fff;
+  outline: none;
+  transition: border 0.2s;
+  margin-bottom: 0.2em;
+}
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+  border-color: #646cff;
+}
+
+button[type="submit"], .toggle-btn, .logout-btn {
+  padding: 0.7em 1.5em;
+  font-size: 1.1em;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(90deg, #646cff 60%, #3a3fce 100%);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0003;
+  margin-top: 0.2em;
+}
+button[type="submit"]:hover, .toggle-btn:hover, .logout-btn:hover {
+  background: linear-gradient(90deg, #3a3fce 0%, #646cff 100%);
+  color: #fff;
+}
+
+.toggle-btn {
+  background: none;
+  color: #646cff;
+  font-weight: 700;
+  border: none;
+  box-shadow: none;
+  text-decoration: underline;
+  margin: 0 0.2em;
+  padding: 0.2em 0.5em;
+  font-size: 1em;
+}
+.toggle-btn:focus {
+  outline: 2px solid #646cff;
+}
+
+.toggle-row {
+  margin-bottom: 1.2em;
+  font-size: 1.05em;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.user-bar {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+.user-bar span {
+  color: #aaa;
+  font-size: 1em;
+  font-weight: 500;
+}
+.logout-btn {
+  background: #2d2f3a;
+  color: #fff;
+  border: 1.5px solid #646cff;
+  font-size: 1em;
+  padding: 0.5em 1.1em;
+  border-radius: 7px;
+  margin-left: 0.5em;
+}
+.logout-btn:hover {
+  background: #646cff;
+  color: #23272f;
+}
+
+pre {
+  background: #181818;
+  color: #0f0;
+  padding: 1em;
+  border-radius: 8px;
+  font-size: 1em;
+  overflow-x: auto;
+}
+
+h3 {
+  margin-bottom: 0.3em;
+  margin-top: 1.2em;
+}
+
+@media (max-width: 600px) {
+  .card {
+    min-width: unset;
+    width: 95vw;
+    padding: 1.5rem 0.5rem;
+  }
+  .user-bar {
+    right: 10px;
+    top: 10px;
+    font-size: 0.95em;
+  }
+}

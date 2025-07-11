@@ -1,0 +1,459 @@
+{
+	"info": {
+		"_postman_id": "sql-agent-api-collection",
+		"name": "SQL Agent API",
+		"description": "Complete Postman collection for testing the SQL Agent API with LangGraph, PostgreSQL, and JWT authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"testpassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login - Get Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "testuser",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "testpassword123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/token",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"token"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/users/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Database Schema",
+			"item": [
+				{
+					"name": "List All Tables",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/schema/tables",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schema",
+								"tables"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Table Schema",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/schema/employees",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schema",
+								"employees"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "SQL Agent Queries",
+			"item": [
+				{
+					"name": "Simple SELECT Query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"SELECT * FROM employees LIMIT 5\",\n  \"description\": \"Get first 5 employees\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sql/query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sql",
+								"query"
+							]
+						}
+					}
+				},
+				{
+					"name": "Complex JOIN Query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"SELECT o.customer_name, p.name as product_name, o.quantity, o.total_amount FROM orders o JOIN products p ON o.product_id = p.id\",\n  \"description\": \"Get orders with product details\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sql/query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sql",
+								"query"
+							]
+						}
+					}
+				},
+				{
+					"name": "Aggregate Query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"SELECT department, AVG(salary) as avg_salary, COUNT(*) as employee_count FROM employees GROUP BY department\",\n  \"description\": \"Get department statistics\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/sql/query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sql",
+								"query"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUD Operations",
+			"item": [
+				{
+					"name": "CREATE - Add New Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"CREATE\",\n  \"table\": \"employees\",\n  \"data\": {\n    \"name\": \"New Employee\",\n    \"email\": \"new@example.com\",\n    \"department\": \"IT\",\n    \"salary\": 80000.00\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crud",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crud"
+							]
+						}
+					}
+				},
+				{
+					"name": "READ - Get All Employees",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"READ\",\n  \"table\": \"employees\",\n  \"data\": {},\n  \"where_clause\": null\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crud",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crud"
+							]
+						}
+					}
+				},
+				{
+					"name": "READ - Get Employees by Department",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"READ\",\n  \"table\": \"employees\",\n  \"data\": {},\n  \"where_clause\": {\n    \"department\": \"Engineering\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crud",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crud"
+							]
+						}
+					}
+				},
+				{
+					"name": "UPDATE - Update Employee Salary",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"UPDATE\",\n  \"table\": \"employees\",\n  \"data\": {\n    \"salary\": 85000.00\n  },\n  \"where_clause\": {\n    \"email\": \"john@example.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crud",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crud"
+							]
+						}
+					}
+				},
+				{
+					"name": "DELETE - Delete Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"operation\": \"DELETE\",\n  \"table\": \"employees\",\n  \"data\": {},\n  \"where_clause\": {\n    \"email\": \"new@example.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/crud",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"crud"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Natural Language Query",
+			"item": [
+				{
+					"name": "NL Query",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"instruction\": \"Show all employees in the Marketing department\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/agent/nl_query",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agent",
+								"nl_query"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+} 
