@@ -1,4 +1,4 @@
 # Ignore environment files
 .env
 # Do NOT ignore the template
-!railway.env.template 
+railway.env.template 
