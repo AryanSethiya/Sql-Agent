@@ -199,23 +199,7 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
-    try:
-        # Test database connection
-        db = next(get_db())
-        db.execute(text("SELECT 1"))
-        db.close()
-        return {
-            "status": "healthy", 
-            "message": "SQL Agent API is running",
-            "database": "connected"
-        }
-    except Exception as e:
-        return {
-            "status": "degraded", 
-            "message": "SQL Agent API is running but database connection failed",
-            "database": "disconnected",
-            "error": str(e)
-        }
+    return {"status": "healthy", "message": "SQL Agent API is running"}
 
 if __name__ == "__main__":
     import uvicorn
