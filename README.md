@@ -1,6 +1,6 @@
 # SQL Agent with LangGraph
 
-A powerful SQL agent built with LangGraph, FastAPI, and PostgreSQL that provides intelligent database operations with JWT authentication.
+A powerful SQL agent built with LangGraph, FastAPI, PostgreSQL, and React that provides intelligent database operations with JWT authentication and a modern web interface.
 
 ## Features
 
@@ -11,10 +11,14 @@ A powerful SQL agent built with LangGraph, FastAPI, and PostgreSQL that provides
 - 📚 **Schema Management**: Database schema inspection and management
 - 🧪 **Postman Testing**: Complete test collection for all endpoints
 - 🔄 **Real-time Processing**: Fast and efficient query execution
+- 🎨 **React Frontend**: Modern web interface for database operations
+- ⚡ **Quick Setup**: Automated environment configuration and setup
+- 📖 **Configuration Guide**: Comprehensive setup and configuration documentation
 
 ## Tech Stack
 
 - **Backend**: FastAPI, Python 3.8+
+- **Frontend**: React, Vite, JavaScript/TypeScript
 - **Database**: PostgreSQL
 - **AI/ML**: LangChain, LangGraph, OpenAI
 - **Authentication**: JWT (JSON Web Tokens)
@@ -24,10 +28,19 @@ A powerful SQL agent built with LangGraph, FastAPI, and PostgreSQL that provides
 ## Prerequisites
 
 - Python 3.8 or higher
+- Node.js 16+ (for frontend)
 - PostgreSQL database
 - OpenAI API key
 
-## Installation
+## Quick Setup
+
+### Option 1: Automated Quick Setup
+```bash
+# Run the quick setup script
+python quick_setup.py
+```
+
+### Option 2: Manual Setup
 
 1. **Clone the repository**
    ```bash
@@ -35,12 +48,18 @@ A powerful SQL agent built with LangGraph, FastAPI, and PostgreSQL that provides
    cd sql-agent
    ```
 
-2. **Install dependencies**
+2. **Install backend dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Set up environment variables**
+3. **Install frontend dependencies**
+   ```bash
+   cd frontend/frontend
+   npm install
+   ```
+
+4. **Set up environment variables**
    ```bash
    cp env_example.txt .env
    ```
@@ -64,17 +83,38 @@ A powerful SQL agent built with LangGraph, FastAPI, and PostgreSQL that provides
    PORT=8000
    ```
 
-4. **Initialize the database**
+5. **Initialize the database**
    ```bash
    python init_db.py
    ```
 
-5. **Run the application**
+6. **Run the backend**
    ```bash
    python run.py
    ```
 
-The API will be available at `http://localhost:8000`
+7. **Run the frontend (in a new terminal)**
+   ```bash
+   cd frontend/frontend
+   npm run dev
+   ```
+
+The API will be available at `http://localhost:8000` and the frontend at `http://localhost:5173`
+
+## Frontend Features
+
+The React frontend provides a modern web interface for:
+
+- **SQL Query Editor**: Write and execute SQL queries with syntax highlighting
+- **Database Browser**: Explore tables, schemas, and data
+- **CRUD Operations**: Create, read, update, and delete records through a user-friendly interface
+- **Authentication**: Login and registration forms
+- **Real-time Results**: View query results in a formatted table
+- **Error Handling**: Clear error messages and suggestions
+
+## Configuration Guide
+
+For detailed setup instructions and troubleshooting, see the [Configuration Guide](CONFIGURATION_GUIDE.md).
 
 ## API Documentation
 
@@ -300,17 +340,34 @@ sql-agent/
 │   ├── schemas.py       # Pydantic schemas
 │   ├── auth.py          # Authentication logic
 │   └── sql_agent.py     # LangGraph SQL agent
+├── frontend/
+│   └── frontend/        # React application
+│       ├── src/         # React source code
+│       ├── public/      # Static assets
+│       ├── package.json # Frontend dependencies
+│       └── vite.config.js # Vite configuration
 ├── requirements.txt      # Python dependencies
 ├── run.py               # Application runner
 ├── init_db.py           # Database initialization
+├── quick_setup.py       # Automated setup script
+├── setup.py             # Manual setup script
+├── CONFIGURATION_GUIDE.md # Detailed setup guide
 ├── env_example.txt      # Environment variables template
 ├── SQL_Agent_API.postman_collection.json
 └── README.md
 ```
 
 ### Running in Development Mode
+
+#### Backend
 ```bash
 python run.py
+```
+
+#### Frontend
+```bash
+cd frontend/frontend
+npm run dev
 ```
 
 ### Database Migrations

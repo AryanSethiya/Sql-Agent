@@ -292,4 +292,3 @@ After creating the database, test if PostgreSQL is accessible:
 psql -U postgres -h localhost -d sql_agent_db -c "SELECT 1;"
 ```
 
-**Would you like me to help you create the database using one of these methods?** 
