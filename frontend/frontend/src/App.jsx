@@ -16,13 +16,15 @@ export default function App() {
   const [isSignup, setIsSignup] = useState(false);
   const [currentUser, setCurrentUser] = useState(() => localStorage.getItem('username') || '');
 
+  const API_BASE = import.meta.env.VITE_API_URL || "https://web-copy-production-6ed4.up.railway.app";
+
   async function handleLogin(e) {
     e.preventDefault();
     setLoginError(null);
     try {
       const body = new URLSearchParams({ username, password });
       console.log('Login request body:', body.toString());
-      const response = await fetch('/token', {
+      const response = await fetch(`${API_BASE}/token`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body,
@@ -59,7 +61,7 @@ export default function App() {
     e.preventDefault();
     setSignupError(null);
     try {
-      const response = await fetch('/register', {
+      const response = await fetch(`${API_BASE}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, email, password }),
@@ -102,7 +104,7 @@ export default function App() {
     setError(null);
     setResult(null);
     try {
-      const response = await fetch('/agent/nl_query', {
+      const response = await fetch(`${API_BASE}/agent/nl_query`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
