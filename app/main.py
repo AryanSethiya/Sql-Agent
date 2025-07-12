@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from datetime import timedelta
 import json
+from sqlalchemy import text
 
 from app.database import get_db, engine
 from app.models import Base, User
@@ -21,6 +22,16 @@ app = FastAPI(
     description="A LangChain-powered SQL agent with CRUD operations and JWT authentication",
     version="1.0.0"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database on startup."""
+    try:
+        # Create tables if they don't exist
+        Base.metadata.create_all(bind=engine)
+        print("✅ Database tables created successfully")
+    except Exception as e:
+        print(f"⚠️  Database initialization warning: {e}")
 
 # Add CORS middleware
 app.add_middleware(
@@ -178,11 +189,33 @@ async def get_table_schema(
             detail=f"Error getting table schema: {str(e)}"
         )
 
+# Simple health check for Railway
+@app.get("/")
+async def root():
+    """Root endpoint for basic health check."""
+    return {"status": "ok", "message": "SQL Agent API is running"}
+
 # Health check endpoint
 @app.get("/health")
 async def health_check():
     """Health check endpoint."""
-    return {"status": "healthy", "message": "SQL Agent API is running"}
+    try:
+        # Test database connection
+        db = next(get_db())
+        db.execute(text("SELECT 1"))
+        db.close()
+        return {
+            "status": "healthy", 
+            "message": "SQL Agent API is running",
+            "database": "connected"
+        }
+    except Exception as e:
+        return {
+            "status": "degraded", 
+            "message": "SQL Agent API is running but database connection failed",
+            "database": "disconnected",
+            "error": str(e)
+        }
 
 if __name__ == "__main__":
     import uvicorn
